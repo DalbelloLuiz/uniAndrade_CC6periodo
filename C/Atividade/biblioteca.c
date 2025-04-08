@@ -19,7 +19,7 @@ struct Livro {
 
 void cadastrarLivro(struct Livro *livro){
     printf("Titulo: ");
-    fgets(livro->titulo, MAX_STR, stdin);
+    fflush(stdin);fgets(livro->titulo, MAX_STR, stdin);
     livro->titulo[strcspn(livro->titulo, "\n")] = '\0';
 
     printf("Autor: ");
@@ -79,8 +79,12 @@ int main(){
         printf("0 - Sair\n");
         printf("Escolha uma opcao:");
         scanf("%d", &opc);
+        getchar();
         switch (opc) {
         case 1:
+        system("clear");
+        cadastrarLivro(&biblioteca[totalLivros]);
+        totalLivros++;
         system("read -p 'Pressione ENTER para continuar...' var");
         system("clear");
             break;
@@ -93,6 +97,10 @@ int main(){
         system("clear");
             break;
         case 4:
+        system("clear");
+        for(int i = 0; totalLivros > i ; i++){
+        exibirLivro(biblioteca[i]);
+    }
         system("read -p 'Pressione ENTER para continuar...' var");
         system("clear");
             break;

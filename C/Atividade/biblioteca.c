@@ -23,7 +23,7 @@ void cadastrarLivro(struct Livro *livro){
     livro->titulo[strcspn(livro->titulo, "\n")] = '\0';
 
     printf("Autor: ");
-    fgets(livro->autor, MAX_STR, stdin);
+    fflush(stdin);fgets(livro->autor, MAX_STR, stdin);
     livro->autor[strcspn(livro->autor, "\n")] = '\0';
 
     livro->total_emprestimos = 0;
@@ -31,16 +31,17 @@ void cadastrarLivro(struct Livro *livro){
     printf("Livro castrado com sucesso\n");
 };
 
-void exibirLivro(struct Livro livro){
-    printf("-------------------------\n");
-    printf("Titulo: %s\n", livro.titulo);
-    printf("Autor: %s\n", livro.autor);
-    printf("Total de emprestimos: %d\n", livro.total_emprestimos);
-
-    if (livro.status == DISPONIVEL){
-        printf("Status: Disponivel\n");
-    } else {
-        printf("Status: Emprestado\n");
+void exibirLivro(struct Livro livro[], int totalLivros){
+    for(int i = 0; i < totalLivros ; i++){
+        printf("Livro %d - ", i);
+        printf("Titulo: %s | Autor: %s\n", livro[i].titulo,livro[i].autor);
+        printf("Total de emprestimos: %d\n", livro[i].total_emprestimos);
+        if (livro[i].status == DISPONIVEL){
+            printf("Status: Disponivel\n");
+        } else {
+            printf("Status: Emprestado\n");
+        }
+        printf("------------------------------\n");
     }
 }
 
@@ -61,7 +62,7 @@ void devolverLivro(struct Livro *livro){
         livro->status = DISPONIVEL;
         printf("Livro devolvido com sucesso!\n");
     }
-}
+};
 
 int main(){
     struct Livro biblioteca[MAX_LIVROS];
@@ -69,6 +70,7 @@ int main(){
     int opc;
 
     do{
+        system("clear");
         printf("*****************************\n");
         printf("**Bibliotecsa Show de BOLA!**\n");
         printf("*****************************\n");
@@ -83,25 +85,56 @@ int main(){
         switch (opc) {
         case 1:
         system("clear");
+        if (totalLivros >= MAX_LIVROS){
+            printf("Limite de livros atingido!\n");
+            printf("Pressione ENTER para continuar...");
+            getchar();
+            system("clear");
+            break;  
+        } else {
         cadastrarLivro(&biblioteca[totalLivros]);
         totalLivros++;
-        system("read -p 'Pressione ENTER para continuar...' var");
+        printf("Pressione ENTER para continuar...");
+        getchar();
         system("clear");
             break;
+        }    
         case 2:
-        system("read -p 'Pressione ENTER para continuar...' var");
+        int aux = 0;
+        system("clear");
+        exibirLivro(biblioteca, totalLivros);
+        printf("Qual livro voce deseja emprestar: ");
+        scanf("%d", &aux);
+        if (aux > totalLivros || aux < 0){
+            printf("Livro inválido!\n");
+            getchar();
+            printf("Pressione ENTER para continuar...");
+            getchar();
+            system("clear");
+            break;            
+        } else{ emprestarLivro(&biblioteca[aux]);
+        getchar();
+        printf("Pressione ENTER para continuar...");
+        getchar();
         system("clear");
             break;
+        }    
         case 3:
-        system("read -p 'Pressione ENTER para continuar...' var");
+        system("clear");
+        exibirLivro(biblioteca, totalLivros);
+        printf("Qual livro voce deseja emprestar: ");
+        scanf("%d", &aux);
+        devolverLivro(&biblioteca[aux]);
+        getchar();
+        printf("Pressione ENTER para continuar...");
+        getchar();
         system("clear");
             break;
         case 4:
         system("clear");
-        for(int i = 0; totalLivros > i ; i++){
-        exibirLivro(biblioteca[i]);
-    }
-        system("read -p 'Pressione ENTER para continuar...' var");
+        exibirLivro(biblioteca, totalLivros);
+        printf("Pressione ENTER para continuar...");
+        getchar();
         system("clear");
             break;
         case 0:
@@ -109,7 +142,8 @@ int main(){
             break;    
         default:
             printf("Opcao invalida!\n");
-            system("read -p 'Pressione ENTER para continuar...' var");
+            printf("Pressione ENTER para continuar...");
+            getchar();
             system("clear");
             break;
 

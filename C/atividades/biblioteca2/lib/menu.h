@@ -3,9 +3,6 @@
 
 #include "livro.h"
 
-void menuPrincipal(struct Livro biblioteca[], int *totalLivros);
-void limparTela();
-void pausarTela();
-
+void mostrarMenu(struct Livro biblioteca[], int *totalLivros);
 
 #endif

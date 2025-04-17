@@ -1,91 +1,89 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../lib/menu.h"
+#include <string.h>
+#include "../lib/livro.h"
 
-void limparTela() {
-#ifdef _WIN32
-    system("cls");
-#else
-    system("clear");
-#endif
-};
-
-void pausarTela() {
-    printf("Pressione ENTER para continuar...");
-    getchar();
-};
-
-void menuPrincipal(struct Livro biblioteca[], int *totalLivros) {
+void mostrarMenu(struct Livro biblioteca[], int *totalLivros) {
     int opc;
+    int aux;
 
-    do {
-        limparTela();
+    do
+    {
+        system("clear");
         printf("*****************************\n");
-        printf("**Biblioteca Show de BOLA!**\n");
+        printf("**Bibliotecsa Show de BOLA!**\n");
         printf("*****************************\n");
         printf("1 - Cadastrar Livro\n");
         printf("2 - Emprestar Livro\n");
         printf("3 - Devolver Livro\n");
-        printf("4 - Relatorio\n");
+        printf("4 - Relatório\n");
         printf("0 - Sair\n");
-        printf("Escolha uma opcao: ");
+        printf("Escolha uma opcao:");
+        fflush(stdout);
         scanf("%d", &opc);
-
-
-        switch (opc) {
+        switch (opc)
+        {
         case 1:
-            limparTela();
-            if (*totalLivros >= MAX_LIVROS) {
+            system("clear");
+            if (*totalLivros >= MAX_LIVROS)
+            {
                 printf("Limite de livros atingido!\n");
-            } else {
+                system("read -p 'Pressione ENTER para continuar...' var");
+                system("clear");
+                break;
+            }
+            else
+            {
                 cadastrarLivro(&biblioteca[*totalLivros]);
                 (*totalLivros)++;
+                system("clear");
+                break;
             }
-            pausarTela();
-            break;
-        case 2: {
-            int aux;
-            limparTela();
+        case 2:
+            int aux = 0;
+            system("clear");
             exibirLivro(biblioteca, *totalLivros);
             printf("Qual livro voce deseja emprestar: ");
+            fflush(stdout);
             scanf("%d", &aux);
-            getchar();
-            if (aux >= 0 && aux < *totalLivros) {
-                emprestarLivro(&biblioteca[aux]);
-            } else {
-                printf("Livro invalido!\n");
+            if (aux > *totalLivros || aux < 0)
+            {
+                printf("Livro inválido!\n");
+                system("read -p 'Pressione ENTER para continuar...' var");
+                system("clear");
+                break;
             }
-            pausarTela();
-            break;
-        }
-        case 3: {
-            int aux;
-            limparTela();
+            else
+            {
+                emprestarLivro(&biblioteca[aux]);
+                system("read -p 'Pressione ENTER para continuar...' var");
+                system("clear");
+                break;
+            }
+        case 3:
+            system("clear");
             exibirLivro(biblioteca, *totalLivros);
             printf("Qual livro voce deseja devolver: ");
+            fflush(stdout);
             scanf("%d", &aux);
-            getchar();
-            if (aux >= 0 && aux < *totalLivros) {
-                devolverLivro(&biblioteca[aux]);
-            } else {
-                printf("Livro invalido!\n");
-            }
-            pausarTela();
+            devolverLivro(&biblioteca[aux]);
+            system("read -p 'Pressione ENTER para continuar...' var");
+            system("clear");
             break;
-        }
         case 4:
-            limparTela();
+            system("clear");
             exibirLivro(biblioteca, *totalLivros);
-            pausarTela();
+            system("read -p 'Pressione ENTER para continuar...' var");
+            system("clear");
             break;
         case 0:
             printf("Saindo...\n");
             break;
         default:
             printf("Opcao invalida!\n");
-            pausarTela();
-            limparTela();
+            system("read -p 'Pressione ENTER para continuar...' var");
+            system("clear");
             break;
         }
     } while (opc != 0);
-};
+}

@@ -1,0 +1,9 @@
+import player
+from player import *
+
+def main():
+    player.atacar()
+    player.dados()
+
+if __name__ == "__main__":
+    main()

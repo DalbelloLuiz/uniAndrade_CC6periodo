@@ -1,7 +1,7 @@
 class Personagem:
     def __init__(self, nome):
         self.nome = nome
-        self.saude = 15
+        self.saude = 100
         self.vivo = True
         self.inventario = Inventario()
 
@@ -74,6 +74,3 @@ inventario = Inventario()
 inventario.adicionar_item(faca)
 inventario.adicionar_item(faca)
 inventario.listar_itens()
-#p1.usar_pocaoRoxa(pocaoRoxa)
-#p1.usar_pocaoVerde(pocaoVerde)
-#p1.usar_pocaoRoxa(pocaoRoxa)

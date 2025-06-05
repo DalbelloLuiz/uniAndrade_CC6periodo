@@ -76,8 +76,3 @@ faca = Item("Faca", 25)
 inventario = Inventario()
 inventario.adicionar_item(faca)
 inventario.adicionar_item(faca)
-<<<<<<< HEAD
-inventario.listar_itens()
-=======
-inventario.listar_itens()
->>>>>>> 01890358b5297a26f11fa4d85fc4a49d10e0bb66

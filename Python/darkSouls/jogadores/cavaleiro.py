@@ -1,24 +1,32 @@
-from jogador import Jogador
+from .jogador import Jogador
+
 class Cavaleiro(Jogador):
-    def __init__(self,nome:str, dano:int):
+    def __init__(self, nome:str, dano:int, armadura:int, resistencia:int):
         super().__init__(nome, dano)
+        self.armadura = armadura
+        self.resistencia = resistencia
+        self.saude = 100
 
-    @property
-    def saude(self):
-        return self._saude
+    def get_saude(self):
+        return super().get_saude()
     
-    @saude.setter
-    def saude(self, valor):
-        self._saude += max(0, valor)
-
+    def set_saude(self, valor):
+        return super().set_saude(valor)
+    
     def atacar(self):
-        print("Atacar Polimorfico")
-        print(f"{self.nome} atacou!")
+        if self.saude != 0:
+            dano_total = self.dano + 5
+            print(f"{self.nome} atacou e causou {dano_total} de dano!")
+        else:
+            print("Você está morto impossível atacar!")
 
-    def defender(self):
-        print("Defendeu Polimorfico")
-        print(f"{self.nome} defendeu!")
+    def defender(self, dano):
+        if self.saude != 0:
+            dano_reduzido = max(0, dano - self.armadura)
+            self.set_saude(-dano_reduzido)
+            print(f"{self.nome} defendeu! Sofreu {dano_reduzido} de dano (após armadura).")
+        else:
+            print("Já está morto! Chega de atacar")
 
-if __name__ == '__main__':
-    cavaleiro = Cavaleiro("Rei Artur", 80)
-    cavaleiro.atacar()
+    def status(self):
+        print(f"Nome:{self.nome} | Dano: {self.dano} | Armadura: {self.armadura} | Resistência: {self.resistencia}")

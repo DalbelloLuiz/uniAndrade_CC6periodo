@@ -1,28 +1,18 @@
-from abc import ABC, abstractmethod
-
-class Jogador(ABC): #Herança
+class Jogador:
 
     def __init__(self, nome:str, dano:int):
         self.nome = nome
         self.dano = dano
-        self.__saude = 100 #encapsulamento
+        self.saude = 100
 
-    @property # Decorador retornas apenas como propriedade
     def get_saude(self):
-        return self.__saude
-
-    #@saude.setter #Decorador retorna apenas como propriedade
-    def set_saude(self, valor):
-        self.saude += max(0,valor)
+        return self.saude
     
-    @abstractmethod # Obriga as classes filhas a implementarem
+    def set_saude(self, valor:int):
+        self.saude = max(0, min(100, self.saude + valor))
+
     def atacar(self):
-        print(f"{self.nome} atacou!")
+        print(f"{self.nome} atacou e causou {self.dano} de dano!")
 
-    @abstractmethod # Obriga as classes filhas a implementarem
-    def defender(self):
-        print(f"{self.nome} defendeu!")
-
-if __name__ == '__main__':
-    p1 = Jogador("Jow", 50)
-    p1.atacar()
+    def defender(self, dano:int):
+        print(f"{self.nome} defendeu {dano} de dano!")
